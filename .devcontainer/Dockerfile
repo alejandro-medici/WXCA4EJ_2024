@@ -6,11 +6,11 @@ FROM registry.access.redhat.com/ubi8/ubi-minimal:latest AS osbase
 
 LABEL maintainer="Alejandro Medici <alejandro.medici@bibm.com>"
 
-# Versions of Maven and Java 17
-ENV MAVEN_VERSION=3.9.9
+# Versions of Maven and Java 21
+ENV MAVEN_VERSION=3.9.10
 ENV SPRINGBOOT_VERSION=3.3.3
 ENV JAVA_VERSION_ORIGIN=1.8.0
-ENV JAVA_VERSION_DEST=17
+ENV JAVA_VERSION_DEST=21
 
 RUN microdnf update && \
     microdnf -y install wget tar gzip git unzip which && \
@@ -25,6 +25,7 @@ RUN INSTALL_PKGS="java-${JAVA_VERSION_ORIGIN}-openjdk-devel java-${JAVA_VERSION_
 
 
 # Download and decompress maven
+RUN echo "** Installing Maven ** "
 RUN mkdir -p /tmp/build/maven && \
     cd /tmp/build/maven && \
     wget -O apache-maven-${MAVEN_VERSION}.tar.gz https://dlcdn.apache.org/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz && \
