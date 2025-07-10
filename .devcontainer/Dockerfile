@@ -13,12 +13,13 @@ ENV JAVA_VERSION_ORIGIN=1.8.0
 ENV JAVA_VERSION_DEST=21
 
 RUN microdnf update && \
-    microdnf -y install wget tar gzip git unzip which && \
+    microdnf -y install wget tar gzip git unzip which procps-ng && \
     microdnf clean all && rm -rf /var/cache/microdnf
 
-#installing Java 17
+#installing Java source and dest version
 RUN echo "** Installing Java ** "
-RUN INSTALL_PKGS="java-${JAVA_VERSION_ORIGIN}-openjdk-devel java-${JAVA_VERSION_DEST}-openjdk-devel glibc-langpack-en findutils nss_wrapper" && \
+#java-${JAVA_VERSION_ORIGIN}-openjdk-devel
+RUN INSTALL_PKGS=" java-${JAVA_VERSION_DEST}-openjdk-devel glibc-langpack-en findutils nss_wrapper" && \
     microdnf -y --setopt=tsflags=nodocs --setopt=install_weak_deps=0 install $INSTALL_PKGS && \
     microdnf -y clean all --enablerepo='*'
 #RUN yum install -y gcc-c++ make 
